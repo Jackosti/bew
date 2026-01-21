@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "default_language": "de",
+  "fallback_language": "de",
+  "languages": {
+    "de": {
+      "code": "de",
+      "name": "Deutsch",
+      "native_name": "Deutsch",
+      "flag": "🇩🇪"
+    },
+    "en": {
+      "code": "en",
+      "name": "English",
+      "native_name": "English",
+      "flag": "🇬🇧"
+    },
+    "ru": {
+      "code": "ru",
+      "name": "Russian",
+      "native_name": "Русский",
+      "flag": "🇷🇺"
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
