@@ -50,7 +50,7 @@ def get_functions():
             get_email_history, get_days_in_app, get_friends,
             get_google_account_email, get_user_online_status,
             set_user_online, save_google_account, save_attached_files,
-            NEON_THEME, DB_FILE, GOOGLE_OAUTH_AVAILABLE,
+            get_app_colors, DB_FILE, GOOGLE_OAUTH_AVAILABLE,
             authenticate_google_oauth, process_google_credentials,
             LoginScreen
         )
@@ -66,7 +66,7 @@ def get_functions():
             'set_user_online': set_user_online,
             'save_google_account': save_google_account,
             'save_attached_files': save_attached_files,
-            'NEON_THEME': NEON_THEME,
+            'get_app_colors': get_app_colors,
             'DB_FILE': DB_FILE,
             'GOOGLE_OAUTH_AVAILABLE': GOOGLE_OAUTH_AVAILABLE,
             'authenticate_google_oauth': authenticate_google_oauth,
@@ -86,7 +86,7 @@ def get_functions():
             'set_user_online': lambda username, is_online=True: None,
             'save_google_account': lambda *args, **kwargs: False,
             'save_attached_files': lambda *args, **kwargs: None,
-            'NEON_THEME': {},
+            'get_app_colors': lambda: {},
             'DB_FILE': 'email_app.db',
             'GOOGLE_OAUTH_AVAILABLE': False,
             'authenticate_google_oauth': lambda: (None, None, 'Not available'),
@@ -96,7 +96,7 @@ def get_functions():
 
 # Функция get_data_dialog удалена - данные теперь в настройках
 
-from localization_manager import t, tr, get_current_language, set_language, get_localization_manager
+from email_app import t, tr, get_current_language, set_language, get_localization_manager
 
 def create_badge_icon(color: str = "#2D1B3D", size: int = 24) -> QPixmap:
     """Создает иконку бейджика (только звезда, без круга)"""
@@ -299,10 +299,8 @@ class FrameSelectionDialog(QDialog):
     def setup_ui(self):
         """Создает интерфейс диалога в стиле приложения"""
         # Получаем цвета темы приложения
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        theme = theme_manager.get_current_theme()
-        colors = theme["colors"]
+        from email_app import get_app_colors
+        colors = get_app_colors()
         self.colors = colors  # Сохраняем для использования в других методах
         
         layout = QVBoxLayout()
@@ -1193,7 +1191,7 @@ class ProfilePage(QWidget):
 
     def setup_ui(self):
         """Создает современный интерфейс профиля"""
-        colors = self._get_funcs()['NEON_THEME']
+        colors = self._get_funcs()['get_app_colors']()
         
         # Главный контейнер с прокруткой
         main_scroll = QScrollArea()
@@ -1217,10 +1215,8 @@ class ProfilePage(QWidget):
         self.setLayout(main_layout)
         
         # Устанавливаем фон через менеджер тем
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        theme = theme_manager.get_current_theme()
-        colors = theme["colors"]
+        from email_app import get_app_colors
+        colors = get_app_colors()
         
         self.setStyleSheet(f"""
             QWidget {{
@@ -3609,12 +3605,10 @@ class ProfilePage(QWidget):
                 self.avatar_label.setText(initials)
                 self.avatar_label.setPixmap(QPixmap())
                 # Возвращаем градиентный фон для инициалов
-                colors = self._get_funcs()['NEON_THEME'] if hasattr(self, '_get_funcs') else {}
+                colors = self._get_funcs()['get_app_colors']() if hasattr(self, '_get_funcs') else {}
                 if not colors:
-                    from theme_manager import get_theme_manager
-                    theme_manager = get_theme_manager()
-                    theme = theme_manager.get_current_theme()
-                    colors = theme["colors"]
+                    from email_app import get_app_colors
+                    colors = get_app_colors()
                 self.avatar_label.setStyleSheet(f"""
                     QLabel#avatarLabel {{
                         background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
@@ -3632,7 +3626,7 @@ class ProfilePage(QWidget):
     
     def logout(self):
         """Выход из аккаунта с виджетом подтверждения"""
-        from settings import LogoutConfirmDialog
+        from pages.settings import LogoutConfirmDialog
         from PyQt6.QtWidgets import QDialog
         if self.main_window:
             dialog = LogoutConfirmDialog(self.main_window, self)
@@ -3690,7 +3684,7 @@ class ProfilePage(QWidget):
         self.auth_widget = QFrame(self)
         self.auth_widget.setObjectName("authWidget")
         self.auth_widget.setFixedSize(520, 380)
-        colors = self._get_funcs()['NEON_THEME']
+        colors = self._get_funcs()['get_app_colors']()
         self.auth_widget.setStyleSheet(f"""
             QFrame#authWidget {{
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
@@ -4425,5 +4419,3 @@ class ProfilePage(QWidget):
         if hasattr(self, 'activity_stats_label') and self.activity_stats_label.parent():
             # Обновляем только если метка уже существует и добавлена в layout
             history = self._get_funcs()['get_email_history']()
-
-

@@ -26,7 +26,7 @@ def get_tr():
     """Получает функцию перевода"""
     try:
         # Убеждаемся, что локализация инициализирована
-        from localization_manager import get_localization_manager, tr
+        from email_app import get_localization_manager, tr
         # Принудительно инициализируем менеджер, если еще не инициализирован
         get_localization_manager()
         return tr
@@ -34,7 +34,7 @@ def get_tr():
         # В случае ошибки возвращаем функцию, которая пытается получить перевод
         def fallback_tr(key):
             try:
-                from localization_manager import tr as real_tr
+                from email_app import tr as real_tr
                 return real_tr(key)
             except:
                 return key
@@ -123,7 +123,7 @@ CURRENT_LANGUAGE = _funcs['CURRENT_LANGUAGE']
 tr = get_tr()
 # Принудительно инициализируем локализацию при загрузке модуля
 try:
-    from localization_manager import get_localization_manager
+    from email_app import get_localization_manager
     get_localization_manager()  # Убеждаемся, что локализация загружена
 except:
     pass
@@ -1649,16 +1649,14 @@ class FriendsPage(QWidget):
         """Создает интерфейс страницы"""
         # Убеждаемся, что локализация инициализирована перед созданием UI
         try:
-            from localization_manager import get_localization_manager
+            from email_app import get_localization_manager
             get_localization_manager()
         except:
             pass
         
         # Устанавливаем фон через менеджер тем (как в profile_page.py)
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        theme = theme_manager.get_current_theme()
-        colors = theme["colors"]
+        from email_app import get_app_colors
+        colors = get_app_colors()
         
         self.setStyleSheet(f"""
             QWidget {{
@@ -2750,7 +2748,7 @@ class FriendsPage(QWidget):
                 
                 # Получаем функцию перевода
                 try:
-                    from localization_manager import tr as tr_func
+                    from email_app import tr as tr_func
                     use_tr = True
                 except:
                     use_tr = False

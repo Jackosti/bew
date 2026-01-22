@@ -307,10 +307,8 @@ class BewerbungPage(QWidget):
         self.setLayout(main_layout)
         
         # Устанавливаем фон через менеджер тем (как в profile_page.py)
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        theme = theme_manager.get_current_theme()
-        colors = theme["colors"]
+        from email_app import get_app_colors
+        colors = get_app_colors()
         
         self.setStyleSheet(f"""
             QWidget {{

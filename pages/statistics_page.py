@@ -19,7 +19,36 @@ from PyQt6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, QEvent, Q
 from PyQt6.QtGui import QFont, QPainter, QColor, QBrush, QPen
 
 # Импорты из основного файла
-from localization_manager import tr, get_current_language
+def get_tr():
+    """Получает функцию перевода."""
+    try:
+        from email_app import tr
+        return tr
+    except ImportError:
+        return lambda key: key
+
+
+def get_current_language():
+    """Получает текущий язык."""
+    try:
+        from email_app import get_current_language as get_lang
+        return get_lang()
+    except ImportError:
+        return 'de'
+
+
+def get_app_colors():
+    """Получает палитру приложения."""
+    try:
+        from email_app import get_app_colors as get_colors
+        return get_colors()
+    except ImportError:
+        return {}
+
+
+def tr(key):
+    """Обертка для перевода."""
+    return get_tr()(key)
 
 # Импортируем функции и константы из email_app (избегаем циклического импорта)
 # Используем локальные импорты внутри функций для избежания циклических зависимостей
@@ -27,13 +56,6 @@ from localization_manager import tr, get_current_language
 
 # Глобальная переменная для языка (будет обновляться)
 CURRENT_LANGUAGE = 'de'
-
-# Тема (будет импортирована из email_app)
-NEON_THEME = {
-    "accent": "#a78bfa",
-    "accent_teal": "#3DB8A8",
-}
-
 
 class ClipboardIconWidget(QWidget):
     """Кастомный виджет для иконки клипборда с двумя линиями"""
@@ -546,7 +568,7 @@ class StatisticsPage(QWidget):
         self.last_sent_at = None
         self.last_update_date = datetime.now().date()
         self.is_active = False
-        # Обновляем CURRENT_LANGUAGE и NEON_THEME из email_app
+        # Обновляем CURRENT_LANGUAGE из email_app
         self._update_imports()
         self.setup_ui()
         # Таймер для обновления календаря при смене дня/месяца
@@ -558,11 +580,10 @@ class StatisticsPage(QWidget):
     
     def _update_imports(self):
         """Обновляет импорты из email_app для избежания циклических зависимостей"""
-        global CURRENT_LANGUAGE, NEON_THEME
+        global CURRENT_LANGUAGE
         try:
-            from email_app import CURRENT_LANGUAGE as EMAIL_APP_LANG, NEON_THEME as EMAIL_APP_THEME
+            from email_app import CURRENT_LANGUAGE as EMAIL_APP_LANG
             CURRENT_LANGUAGE = EMAIL_APP_LANG
-            NEON_THEME.update(EMAIL_APP_THEME)
         except:
             pass
     
@@ -618,7 +639,7 @@ class StatisticsPage(QWidget):
     
     def setup_ui(self):
         """Создает интерфейс статистики"""
-        colors = NEON_THEME
+        colors = get_app_colors()
         
         # Создаем скроллируемую область для оконного режима
         scroll_area = QScrollArea()
@@ -662,10 +683,8 @@ class StatisticsPage(QWidget):
         scroll_area.setWidget(content_widget)
         
         # Устанавливаем фон через менеджер тем (как в profile_page.py)
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        theme = theme_manager.get_current_theme()
-        colors = theme["colors"]
+        from email_app import get_app_colors
+        colors = get_app_colors()
         
         self.setStyleSheet(f"""
             QWidget {{
@@ -1159,7 +1178,7 @@ class StatisticsPage(QWidget):
     
     def create_health_tracker(self, title, value, icon_type):
         """Создает трекер в стиле Apple Health с использованием нового цвета"""
-        colors = NEON_THEME
+        colors = get_app_colors()
         # Чередуем цвета для разнообразия
         color_map = {
             "applications": colors['accent'],
@@ -1727,12 +1746,6 @@ class StatisticsPage(QWidget):
            (datetime.now() - self._last_stats_update).total_seconds() > 5:
             self.load_statistics()
             self._last_stats_update = datetime.now()
-
-
-
-
-
-
 
 
 

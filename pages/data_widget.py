@@ -16,7 +16,7 @@ from PyQt6.QtGui import QFont, QColor, QRegularExpressionValidator
 def get_current_language():
     """Получает текущий язык"""
     try:
-        from localization_manager import get_current_language as get_lang
+        from email_app import get_current_language as get_lang
         return get_lang()
     except ImportError:
         return 'de'
@@ -1064,4 +1064,3 @@ class DataWidget(QWidget):
                 pass
         
         # Обновляем заполненность профиля
-
