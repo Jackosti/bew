@@ -180,7 +180,7 @@ class PremiumCTAButton(QPushButton):
 def get_tr():
     """Получает функцию перевода"""
     try:
-        from localization_manager import tr
+        from email_app import tr
         return tr
     except ImportError:
         def fallback_tr(key):

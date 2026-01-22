@@ -25,13 +25,10 @@ from PyQt6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, QRect, QP
 from PyQt6.QtGui import QFont, QColor, QPainter, QPainterPath, QBrush, QPen, QLinearGradient, QIcon, QPixmap
 from PyQt6.QtWidgets import QGraphicsColorizeEffect
 
-from localization_manager import t, tr, get_current_language, set_language, get_localization_manager
+from email_app import t, tr, get_current_language, set_language, get_localization_manager
 
 # Импортируем функции из email_app (избегаем циклического импорта)
 import email_app
-
-# Импортируем менеджер тем
-from theme_manager import get_theme_manager
 
 
 class LanguageItemDelegate(QStyledItemDelegate):
@@ -313,147 +310,19 @@ class LogoutConfirmDialog(QDialog):
 
 
 class ThemePreviewDialog(QDialog):
-    """Диалог предпросмотра темы в стиле Telegram"""
-    def __init__(self, theme_id, theme_manager, parent=None):
+    """Диалог предпросмотра темы отключен."""
+    def __init__(self, theme_id=None, parent=None):
         super().__init__(parent)
-        self.theme_id = theme_id
-        self.theme_manager = theme_manager
         self.setWindowTitle(tr("theme_preview"))
-        self.setFixedSize(800, 600)
-        self.setWindowFlags(Qt.WindowType.Dialog | Qt.WindowType.FramelessWindowHint)
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.setup_ui()
-    
-    def setup_ui(self):
-        """Создает интерфейс диалога"""
-        layout = QVBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
-        self.setLayout(layout)
-        
-        # Контейнер
-        container = QFrame()
-        theme = self.theme_manager.themes.get(self.theme_id, self.theme_manager.themes["default"])
-        colors = theme["colors"]
-        
-        container.setStyleSheet(f"""
-            QFrame {{
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-                    stop:0 {colors['main_window_bg_start']},
-                    stop:0.5 {colors['main_window_bg_mid']},
-                    stop:1 {colors['main_window_bg_end']});
-                border-radius: 20px;
-                border: 2px solid {colors['card_border']};
-            }}
-        """)
-        container_layout = QVBoxLayout()
-        container_layout.setContentsMargins(0, 0, 0, 0)
-        container_layout.setSpacing(0)
-        container.setLayout(container_layout)
-        
-        # Заголовок
-        header = QFrame()
-        header.setStyleSheet(f"""
-            QFrame {{
-                background: {colors['card_bg']};
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
-                border-bottom: 1px solid {colors['divider']};
-            }}
-        """)
-        header_layout = QHBoxLayout()
-        header_layout.setContentsMargins(20, 15, 20, 15)
-        
+        self.setFixedSize(520, 220)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(24, 24, 24, 24)
         title = QLabel(tr("theme_preview"))
-        title.setFont(QFont("Segoe UI", 18, QFont.Weight.Bold))
-        title.setStyleSheet(f"color: {colors['text_primary']}; background: transparent;")
-        header_layout.addWidget(title)
-        header_layout.addStretch()
-        
-        close_btn = QPushButton("✕")
-        close_btn.setFixedSize(32, 32)
-        close_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        close_btn.clicked.connect(self.reject)
-        close_btn.setStyleSheet(f"""
-            QPushButton {{
-                background-color: {colors['button_secondary_bg']};
-                border: none;
-                border-radius: 16px;
-                color: {colors['text_primary']};
-                font-size: 18px;
-                font-weight: bold;
-            }}
-            QPushButton:hover {{
-                background-color: {colors['button_secondary_hover']};
-            }}
-        """)
-        header_layout.addWidget(close_btn)
-        header.setLayout(header_layout)
-        container_layout.addWidget(header)
-        
-        # Предпросмотр темы - использует тот же рендеринг что и реальная тема
-        preview_widget = ThemePreviewWidget(self.theme_id)
-        preview_widget.setFixedHeight(450)
-        container_layout.addWidget(preview_widget)
-        
-        # Кнопки внизу
-        buttons_frame = QFrame()
-        buttons_frame.setStyleSheet(f"""
-            QFrame {{
-                background: {colors['card_bg']};
-                border-bottom-left-radius: 20px;
-                border-bottom-right-radius: 20px;
-                border-top: 1px solid {colors['divider']};
-            }}
-        """)
-        buttons_layout = QHBoxLayout()
-        buttons_layout.setContentsMargins(20, 15, 20, 15)
-        buttons_layout.setSpacing(12)
-        
-        cancel_btn = QPushButton(tr("cancel"))
-        cancel_btn.setFixedHeight(40)
-        cancel_btn.setFixedWidth(120)
-        cancel_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        cancel_btn.clicked.connect(self.reject)
-        cancel_btn.setStyleSheet(f"""
-            QPushButton {{
-                background: {colors['button_secondary_bg']};
-                border: 2px solid {colors['button_secondary_text']};
-                border-radius: 10px;
-                color: {colors['button_secondary_text']};
-                font-size: 14px;
-                font-weight: 600;
-            }}
-            QPushButton:hover {{
-                background: {colors['button_secondary_hover']};
-            }}
-        """)
-        buttons_layout.addWidget(cancel_btn)
-        buttons_layout.addStretch()
-        
-        apply_btn = QPushButton(tr("apply_theme"))
-        apply_btn.setFixedHeight(40)
-        apply_btn.setFixedWidth(150)
-        apply_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        apply_btn.clicked.connect(self.accept)
-        apply_btn.setStyleSheet(f"""
-            QPushButton {{
-                background: {colors['button_primary_bg']};
-                border: none;
-                border-radius: 10px;
-                color: {colors['button_primary_text']};
-                font-size: 14px;
-                font-weight: 600;
-            }}
-            QPushButton:hover {{
-                background: {colors['button_primary_hover']};
-            }}
-        """)
-        buttons_layout.addWidget(apply_btn)
-        buttons_frame.setLayout(buttons_layout)
-        container_layout.addWidget(buttons_frame)
-        
-        layout.addWidget(container)
+        title.setFont(QFont("Segoe UI", 16, QFont.Weight.Bold))
+        title.setStyleSheet("color: #6C4A8B; background: transparent;")
+        layout.addWidget(title)
+        layout.addWidget(QLabel("Функция тем отключена"), alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addStretch()
 
 
 class ThemePreviewWidget(QWidget):
@@ -470,20 +339,13 @@ class ThemePreviewWidget(QWidget):
     
     def paintEvent(self, event):
         """Отрисовывает предпросмотр темы - мини-версию приложения"""
+        return
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         
         rect = self.rect()
         
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        
-        if self.theme_id in theme_manager.themes:
-            theme = theme_manager.themes[self.theme_id]
-            colors = theme["colors"]
-        else:
-            theme = theme_manager.themes["default"]
-            colors = theme["colors"]
+        colors = {}
         
         # Фон всего предпросмотра
         grad = QLinearGradient(QPointF(rect.topLeft()), QPointF(rect.bottomRight()))
@@ -813,10 +675,6 @@ class SettingsDialog(QDialog):
         self.setFixedSize(1400, 900)
         self.current_section = "general"
         self.selected_language = get_current_language()
-        self.theme_manager = get_theme_manager()
-        # Сохраняем исходную тему при открытии настроек
-        self.original_theme_id = self.theme_manager.current_theme_id
-        self.selected_theme = self.original_theme_id
         self.has_unsaved_changes = False
         self.search_input = None
         self.overlay = None  # Overlay для затемнения фона
@@ -863,14 +721,6 @@ class SettingsDialog(QDialog):
             painter.drawLine(14, 4, 12, 6)
             painter.drawLine(16, 16, 14, 14)
             painter.drawLine(4, 16, 6, 14)
-        elif icon_type == "theme":
-            # Иконка темы (палитра)
-            painter.setBrush(QBrush())  # Без заливки
-            painter.drawEllipse(4, 4, 6, 6)
-            painter.drawEllipse(10, 6, 6, 6)
-            painter.drawEllipse(6, 10, 6, 6)
-            # Кисть
-            painter.drawLine(14, 12, 18, 16)
         elif icon_type == "data":
             # Иконка данных (график)
             painter.setBrush(QBrush())  # Без заливки
@@ -1157,7 +1007,6 @@ class SettingsDialog(QDialog):
         # Кнопки категорий с монохромными иконками
         categories = [
             ("general", "general", tr("general")),
-            ("theme", "theme", tr("apply_theme")),
             ("data", "data", tr("data")),
             ("account", "account", tr("account_and_security")),
             ("security", "security", tr("security")),
@@ -1247,7 +1096,6 @@ class SettingsDialog(QDialog):
         # Маппинг секций к типам иконок
         icon_types = {
             "general": "general",
-            "theme": "theme",
             "data": "data",
             "account": "account",
             "security": "security",
@@ -1308,17 +1156,15 @@ class SettingsDialog(QDialog):
                 self.content_stack.setCurrentIndex(0)
             elif section_id == "language":
                 self.content_stack.setCurrentIndex(1)
-            elif section_id == "theme":
-                self.content_stack.setCurrentIndex(2)
             elif section_id == "data":
-                self.content_stack.setCurrentIndex(3)
+                self.content_stack.setCurrentIndex(2)
                 if hasattr(self, 'data_widget_ref') and self.data_widget_ref:
                     if hasattr(self.data_widget_ref, 'load_data'):
                         self.data_widget_ref.load_data()
             elif section_id == "account":
-                self.content_stack.setCurrentIndex(4)
+                self.content_stack.setCurrentIndex(3)
             elif section_id == "security":
-                self.content_stack.setCurrentIndex(5)
+                self.content_stack.setCurrentIndex(4)
     
     def init_sections(self):
         """Инициализирует секции настроек"""
@@ -1329,11 +1175,7 @@ class SettingsDialog(QDialog):
         # Секция "Language & Time"
         language_widget = self.create_language_section()
         self.content_stack.addWidget(language_widget)
-        
-        # Секция "Тема"
-        theme_widget = self.create_theme_section()
-        self.content_stack.addWidget(theme_widget)
-        
+
         # Секция "Данные"
         data_widget = self.create_data_section()
         self.content_stack.addWidget(data_widget)
@@ -1518,349 +1360,46 @@ class SettingsDialog(QDialog):
         return widget
     
     def create_theme_section(self):
-        """Создает секцию выбора темы"""
+        """Секция тем удалена."""
         widget = QWidget()
         layout = QVBoxLayout()
         layout.setContentsMargins(24, 24, 24, 24)
-        layout.setSpacing(20)
-        widget.setLayout(layout)
-        
-        # Белая карточка
-        card = QFrame()
-        card.setObjectName("settingsCard")
-        card.setStyleSheet("""
-            QFrame#settingsCard {
-                background: #FAF9FE;
-                border-radius: 16px;
-            }
-        """)
-        card_layout = QVBoxLayout()
-        card_layout.setContentsMargins(24, 24, 24, 24)
-        card_layout.setSpacing(20)
-        card.setLayout(card_layout)
-        
-        # Заголовок
-        title = QLabel("Тема оформления")
-        title.setFont(QFont("Segoe UI", 16, QFont.Weight.Normal))
-        title.setStyleSheet("color: #4B3F72; background: transparent;")
-        card_layout.addWidget(title)
-        
-        # Разделитель убран по требованию
-        
-        # Контейнер для тем
-        themes_container = QWidget()
-        themes_layout = QVBoxLayout()
-        themes_layout.setContentsMargins(0, 0, 0, 0)
-        themes_layout.setSpacing(16)
-        themes_container.setLayout(themes_layout)
-        
-        # Храним ссылки на карточки тем
-        if not hasattr(self, 'theme_cards'):
-            self.theme_cards = {}
-        
-        # Добавляем все доступные темы
-        available_themes = [
-            ("default", "По умолчанию", "Классическая фиолетовая тема приложения"),
-            ("green_gray", "Светло-зеленая + Серая", "Оливково-зеленый и бежево-серый градиент с декоративными элементами"),
-            ("discord", "Discord", "Светло-серая и темно-серая тема в стиле Discord"),
-        ]
-        
-        # Добавляем пользовательскую тему, если она есть
-        if "custom" in self.theme_manager.themes:
-            available_themes.append(("custom", "Пользовательская", "Ваша собственная тема"))
-        
-        for theme_id, name, description in available_themes:
-            theme_card = self.create_theme_card(
-                name,
-                description,
-                theme_id,
-                is_selected=(self.selected_theme == theme_id)
-            )
-            themes_layout.addWidget(theme_card)
-            self.theme_cards[theme_id] = theme_card
-        
-        # Кнопка создания пользовательской темы
-        create_theme_btn = QPushButton("✎ Создать свою тему")
-        create_theme_btn.setFixedHeight(50)
-        create_theme_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        create_theme_btn.clicked.connect(self.show_theme_editor)
-        create_theme_btn.setStyleSheet("""
-            QPushButton {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 rgba(167, 139, 250, 0.3),
-                    stop:1 rgba(139, 92, 246, 0.3));
-                border: 2px solid rgba(167, 139, 250, 0.6);
-                border-radius: 12px;
-                color: #2D1B3D;
-                font-size: 14px;
-                font-weight: 600;
-            }
-            QPushButton:hover {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 rgba(167, 139, 250, 0.5),
-                    stop:1 rgba(139, 92, 246, 0.5));
-                border-color: rgba(167, 139, 250, 0.8);
-            }
-        """)
-        themes_layout.addWidget(create_theme_btn)
-        
-        card_layout.addWidget(themes_container)
-        card_layout.addStretch()
-        layout.addWidget(card)
+        layout.setSpacing(12)
+        notice = QLabel("Раздел тем удален из приложения.")
+        notice.setStyleSheet("color: #6C4A8B; background: transparent;")
+        layout.addWidget(notice)
         layout.addStretch()
-        
+        widget.setLayout(layout)
         return widget
     
     def create_theme_card(self, title, description, theme_id, is_selected=False):
-        """Создает карточку темы с предпросмотром"""
+        """Создает заглушку карточки темы (темы отключены)."""
         card = QFrame()
-        card.setObjectName(f"themeCard_{theme_id}")
-        card.setCursor(Qt.CursorShape.PointingHandCursor)
-        
-        # Стили для карточки
-        if is_selected:
-            card.setStyleSheet(f"""
-                QFrame#themeCard_{theme_id} {{
-                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                        stop:0 rgba(139, 195, 74, 0.15),
-                        stop:1 rgba(158, 158, 158, 0.15));
-                    border: 2px solid rgba(139, 195, 74, 0.5);
-                    border-radius: 16px;
-                    padding: 20px;
-                }}
-                QFrame#themeCard_{theme_id}:hover {{
-                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                        stop:0 rgba(139, 195, 74, 0.25),
-                        stop:1 rgba(158, 158, 158, 0.25));
-                    border-color: rgba(139, 195, 74, 0.7);
-                }}
-            """)
-        else:
-            card.setStyleSheet(f"""
-                QFrame#themeCard_{theme_id} {{
-                    background: rgba(240, 240, 240, 0.5);
-                    border: 2px solid rgba(200, 200, 200, 0.3);
-                    border-radius: 16px;
-                    padding: 20px;
-                }}
-                QFrame#themeCard_{theme_id}:hover {{
-                    background: rgba(240, 240, 240, 0.8);
-                    border-color: rgba(200, 200, 200, 0.5);
-                }}
-            """)
-        
         card_layout = QVBoxLayout()
         card_layout.setContentsMargins(0, 0, 0, 0)
-        card_layout.setSpacing(12)
+        card_layout.addWidget(QLabel("Темы отключены"))
         card.setLayout(card_layout)
-        
-        # Заголовок и описание
-        title_label = QLabel(title)
-        title_label.setFont(QFont("Segoe UI", 14, QFont.Weight.Normal))
-        title_label.setStyleSheet("color: #4B3F72; background: transparent;")
-        card_layout.addWidget(title_label)
-        
-        desc_label = QLabel(description)
-        desc_label.setFont(QFont("Segoe UI", 12))
-        desc_label.setStyleSheet("color: #6C4A8B; background: transparent;")
-        desc_label.setWordWrap(True)
-        card_layout.addWidget(desc_label)
-        
-        # Кнопка выбора темы (открывает диалог с предпросмотром)
-        apply_btn = QPushButton("Сменить тему" if is_selected else "Выбрать тему")
-        apply_btn.setFixedHeight(40)
-        apply_btn.setObjectName(f"applyThemeBtn_{theme_id}")
-        if is_selected:
-            apply_btn.setStyleSheet(f"""
-                QPushButton#applyThemeBtn_{theme_id} {{
-                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                        stop:0 rgba(139, 195, 74, 0.3),
-                        stop:1 rgba(158, 158, 158, 0.3));
-                    border: 2px solid rgba(139, 195, 74, 0.6);
-                    border-radius: 10px;
-                    color: #2D1B3D;
-                    font-size: 13px;
-                    font-weight: 600;
-                }}
-                QPushButton#applyThemeBtn_{theme_id}:hover {{
-                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                        stop:0 rgba(139, 195, 74, 0.5),
-                        stop:1 rgba(158, 158, 158, 0.5));
-                    border-color: rgba(139, 195, 74, 0.8);
-                }}
-            """)
-        else:
-            apply_btn.setStyleSheet(f"""
-                QPushButton#applyThemeBtn_{theme_id} {{
-                    background: rgba(200, 182, 226, 0.3);
-                    border: 2px solid rgba(156, 137, 184, 0.4);
-                    border-radius: 10px;
-                    color: #6C4A8B;
-                    font-size: 13px;
-                    font-weight: 600;
-                }}
-                QPushButton#applyThemeBtn_{theme_id}:hover {{
-                    background: rgba(200, 182, 226, 0.5);
-                    border-color: rgba(156, 137, 184, 0.6);
-                }}
-            """)
-        
-        apply_btn.clicked.connect(lambda: self.show_theme_preview_dialog(theme_id))
-        card_layout.addWidget(apply_btn)
-        
         return card
     
     def show_theme_preview_dialog(self, theme_id):
-        """Показывает диалог с предпросмотром темы в стиле Telegram"""
-        dialog = ThemePreviewDialog(theme_id, self.theme_manager, parent=self)
-        if dialog.exec():
-            # Пользователь нажал "Применить"
-            self.apply_theme(theme_id)
+        """Темы отключены."""
+        return
     
     def apply_theme(self, theme_id):
-        """Применяет выбранную тему"""
-        self.selected_theme = theme_id
-        
-        # Применяем тему через менеджер тем
-        if self.theme_manager.set_theme(theme_id):
-            # Применяем тему к главному окну
-            self.apply_theme_to_main_window()
-        
-        # Обновляем визуальное отображение карточек тем
-        self.update_theme_cards()
-        
-        self.mark_unsaved_changes()
+        """Темы отключены."""
+        return
     
     def apply_theme_to_main_window(self):
-        """Применяет текущую тему к главному окну - полностью перезаписывает стили"""
-        if not self.main_window:
-            return
-        
-        theme = self.theme_manager.get_current_theme()
-        colors = theme["colors"]
-        
-        # ВАЖНО: Сначала очищаем все старые стили, чтобы избежать смешивания
-        app = QApplication.instance()
-        if app:
-            # Полностью очищаем глобальные стили
-            app.setStyleSheet("")
-            # Применяем новую тему через менеджер (он сам обновит виджеты)
-            self.theme_manager.apply_theme_to_app(app)
-        
-        # Очищаем стили главного окна
-        self.main_window.setStyleSheet("")
-        
-        # Применяем новые стили к главному окну
-        main_window_styles = f"""
-            QMainWindow {{
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-                    stop:0 {colors['main_window_bg_start']},
-                    stop:0.5 {colors['main_window_bg_mid']},
-                    stop:1 {colors['main_window_bg_end']});
-                color: {colors['text_primary']};
-            }}
-        """
-        self.main_window.setStyleSheet(main_window_styles)
-        
-        # Принудительно обновляем все виджеты главного окна
-        self.main_window.update()
-        central = self.main_window.centralWidget()
-        if central:
-            central.update()
-            # Обновляем все дочерние виджеты
-            for child in central.findChildren(QWidget):
-                if child:
-                    child.update()
-        
-        # Обновляем стили кнопок если есть
-        if hasattr(self.main_window, 'apply_theme'):
-            QTimer.singleShot(100, self.main_window.apply_theme)
+        """Темы отключены."""
+        return
     
     def update_theme_cards(self):
-        """Обновляет визуальное отображение карточек тем"""
-        if not hasattr(self, 'theme_cards'):
-            return
-        
-        # Обновляем все карточки тем
-        for theme_id, card in self.theme_cards.items():
-            is_selected = (self.selected_theme == theme_id)
-            if is_selected:
-                card.setStyleSheet(f"""
-                    QFrame#themeCard_{theme_id} {{
-                        background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                            stop:0 rgba(139, 195, 74, 0.15),
-                            stop:1 rgba(158, 158, 158, 0.15));
-                        border: 2px solid rgba(139, 195, 74, 0.5);
-                        border-radius: 16px;
-                        padding: 20px;
-                    }}
-                    QFrame#themeCard_{theme_id}:hover {{
-                        background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                            stop:0 rgba(139, 195, 74, 0.25),
-                            stop:1 rgba(158, 158, 158, 0.25));
-                        border-color: rgba(139, 195, 74, 0.7);
-                    }}
-                """)
-            else:
-                card.setStyleSheet(f"""
-                    QFrame#themeCard_{theme_id} {{
-                        background: rgba(240, 240, 240, 0.5);
-                        border: 2px solid rgba(200, 200, 200, 0.3);
-                        border-radius: 16px;
-                        padding: 20px;
-                    }}
-                    QFrame#themeCard_{theme_id}:hover {{
-                        background: rgba(240, 240, 240, 0.8);
-                        border-color: rgba(200, 200, 200, 0.5);
-                    }}
-                """)
-            
-            # Обновляем кнопку
-            apply_btn = card.findChild(QPushButton, f"applyThemeBtn_{theme_id}")
-            if apply_btn:
-                apply_btn.setText("Применить" if is_selected else "Выбрать")
-                if is_selected:
-                    apply_btn.setStyleSheet(f"""
-                        QPushButton#applyThemeBtn_{theme_id} {{
-                            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                                stop:0 rgba(139, 195, 74, 0.3),
-                                stop:1 rgba(158, 158, 158, 0.3));
-                            border: 2px solid rgba(139, 195, 74, 0.6);
-                            border-radius: 10px;
-                            color: #2D1B3D;
-                            font-size: 13px;
-                            font-weight: 600;
-                        }}
-                        QPushButton#applyThemeBtn_{theme_id}:hover {{
-                            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                                stop:0 rgba(139, 195, 74, 0.5),
-                                stop:1 rgba(158, 158, 158, 0.5));
-                            border-color: rgba(139, 195, 74, 0.8);
-                        }}
-                    """)
-                else:
-                    apply_btn.setStyleSheet(f"""
-                        QPushButton#applyThemeBtn_{theme_id} {{
-                            background: rgba(200, 182, 226, 0.3);
-                            border: 2px solid rgba(156, 137, 184, 0.4);
-                            border-radius: 10px;
-                            color: #6C4A8B;
-                            font-size: 13px;
-                            font-weight: 600;
-                        }}
-                        QPushButton#applyThemeBtn_{theme_id}:hover {{
-                            background: rgba(200, 182, 226, 0.5);
-                            border-color: rgba(156, 137, 184, 0.6);
-                        }}
-                    """)
+        """Темы отключены."""
+        return
     
     def show_theme_editor(self):
-        """Показывает редактор тем в стиле Telegram"""
-        from theme_editor import ThemeEditorDialog
-        editor = ThemeEditorDialog(self.theme_manager, parent=self)
-        if editor.exec():
-            # Тема была сохранена, обновляем список
-            self.switch_section("theme")  # Перезагружаем секцию тем
+        """Темы отключены."""
+        return
     
     def create_data_section(self):
         """Создает секцию данных пользователя"""
@@ -2133,7 +1672,6 @@ class SettingsDialog(QDialog):
     
     def change_language(self, language_code, dialog=None):
         """Выбирает язык"""
-        from localization_manager import get_localization_manager
         manager = get_localization_manager()
         
         self.selected_language = language_code
@@ -2253,16 +1791,6 @@ class SettingsDialog(QDialog):
                     self.language_combo.setCurrentIndex(i)
                     break
         
-        # ВАЖНО: Сбрасываем тему к исходной (которая была при открытии настроек)
-        if hasattr(self, 'selected_theme') and hasattr(self, 'original_theme_id'):
-            # Возвращаем исходную тему
-            self.selected_theme = self.original_theme_id
-            # Применяем исходную тему обратно
-            if self.theme_manager.set_theme(self.original_theme_id):
-                self.apply_theme_to_main_window()
-            # Обновляем карточки тем
-            self.update_theme_cards()
-        
         # Сбрасываем чекбокс блокировки экрана
         if hasattr(self, 'screen_lock_checkbox'):
             self.screen_lock_checkbox.setChecked(False)
@@ -2286,24 +1814,6 @@ class SettingsDialog(QDialog):
                 if self.main_window:
                     self.main_window.update_all_texts()
                     QTimer.singleShot(1500, lambda: self.main_window.update_all_texts() if self.main_window else None)
-        
-        # Сохраняем выбранную тему
-        if hasattr(self, 'selected_theme'):
-            # Устанавливаем тему в менеджере
-            if self.theme_manager.set_theme(self.selected_theme):
-                # Применяем тему к главному окну (полностью перезаписывает стили)
-                self.apply_theme_to_main_window()
-                
-                # Обновляем исходную тему для следующего открытия настроек
-                self.original_theme_id = self.selected_theme
-                
-                # Принудительно обновляем все виджеты приложения
-                app = QApplication.instance()
-                if app:
-                    # Обновляем все окна
-                    for widget in app.allWidgets():
-                        if widget:
-                            widget.update()
         
         self.has_unsaved_changes = False
         if hasattr(self, 'save_button'):
@@ -2345,7 +1855,6 @@ class SettingsDialog(QDialog):
         search_keywords = {
             "general": ["general", "основное", "общее", "allgemein"],
             "language": ["language", "язык", "sprache", "lang", "time", "время", "zeit"],
-            "theme": ["theme", "тема", "оформление", "design", "стиль", "style", "цвет", "color"],
             "data": ["data", "данные", "профиль", "profil"],
             "account": ["account", "аккаунт", "google", "регистрация", "registration"],
             "security": ["security", "безопасность", "sicherheit", "история", "history", "предупреждения", "warnings"]
@@ -2408,4 +1917,3 @@ class SettingsDialog(QDialog):
             self.close()
             # Выполняем выход напрямую, без повторного показа диалога
             self.main_window._execute_logout()
-
