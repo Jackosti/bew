@@ -7,10 +7,12 @@ import shutil
 import secrets
 import base64
 import atexit
+import logging
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.request import urlopen
 from io import BytesIO
+from typing import Dict, Optional, Callable, List, Set
 # Ленивая загрузка PIL для оптимизации времени запуска
 _PIL_Image = None
 _PIL_ImageEnhance = None
@@ -105,48 +107,388 @@ except ImportError:
 import config
 
 # Система локализации
-from localization_manager import (
-    t,  # Главная функция перевода
-    tr,  # Алиас для обратной совместимости
-    get_current_language,
-    set_language,
-    register_language_callback,
-    get_localization_manager
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('localization.log', encoding='utf-8'),
+        logging.StreamHandler()
+    ]
 )
+_localization_logger = logging.getLogger('LocalizationManager')
+
+
+class LocalizationManager:
+    """
+    Менеджер локализации с JSON поддержкой
+    - base_keys.json как единственный источник истины
+    - Автоматическое обнаружение языков из папки locales/
+    - Валидация синхронизации ключей
+    - Fallback на de если ключ отсутствует
+    - Загрузка языка пользователя из БД
+    """
+
+    DEFAULT_LANGUAGE = 'de'
+    FALLBACK_LANGUAGE = 'de'  # Fallback всегда на немецкий
+
+    def __init__(self):
+        """Инициализация менеджера локализации"""
+        self.locales_dir = Path(__file__).parent / "locales"
+        self._current_language = self.DEFAULT_LANGUAGE
+        self._translations: Dict[str, Dict[str, str]] = {}
+        self._callbacks: List[Callable[[], None]] = []
+        self._base_keys: Set[str] = set()
+        self._available_languages: Dict[str, Dict] = {}
+
+        # Загружаем метаданные языков
+        self._load_meta()
+
+        # Загружаем base_keys.json
+        self._load_base_keys()
+
+        # Автоматически обнаруживаем и загружаем языки
+        self._auto_discover_languages()
+
+        # Валидируем все языки
+        self._validate_all_languages()
+
+        _localization_logger.info(
+            "LocalizationManager initialized. Current language: %s",
+            self._current_language
+        )
+        _localization_logger.info(
+            "Available languages: %s",
+            list(self._available_languages.keys())
+        )
+
+    def _load_meta(self):
+        """Загружает метаданные языков из meta.json"""
+        meta_path = self.locales_dir / "meta.json"
+        if meta_path.exists():
+            try:
+                with open(meta_path, 'r', encoding='utf-8') as f:
+                    meta = json.load(f)
+                    self._available_languages = meta.get('languages', {})
+                    self.DEFAULT_LANGUAGE = meta.get('default_language', 'de')
+                    self.FALLBACK_LANGUAGE = meta.get('fallback_language', 'de')
+                    self._current_language = self.DEFAULT_LANGUAGE
+                    _localization_logger.info(
+                        "Loaded meta.json: %s languages",
+                        len(self._available_languages)
+                    )
+            except Exception as e:
+                _localization_logger.error("Error loading meta.json: %s", e)
+                self._available_languages = {}
+
+    def _load_base_keys(self):
+        """Загружает base_keys.json - единственный источник истины для ключей"""
+        base_keys_path = self.locales_dir / "base_keys.json"
+        if not base_keys_path.exists():
+            _localization_logger.error("base_keys.json not found at %s", base_keys_path)
+            return
+
+        try:
+            with open(base_keys_path, 'r', encoding='utf-8') as f:
+                base_keys = json.load(f)
+                self._base_keys = set(base_keys.keys())
+                _localization_logger.info(
+                    "Loaded base_keys.json: %s keys",
+                    len(self._base_keys)
+                )
+        except Exception as e:
+            _localization_logger.error("Error loading base_keys.json: %s", e)
+
+    def _auto_discover_languages(self):
+        """Автоматически обнаруживает доступные языки из папки locales/"""
+        if not self.locales_dir.exists():
+            _localization_logger.error("Locales directory not found: %s", self.locales_dir)
+            return
+
+        json_files = list(self.locales_dir.glob("*.json"))
+        json_files = [f for f in json_files if f.name not in ['base_keys.json', 'meta.json']]
+
+        for json_file in json_files:
+            lang_code = json_file.stem
+            if lang_code in ['base_keys', 'meta']:
+                continue
+
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    translations = json.load(f)
+                    self._translations[lang_code] = translations
+                    _localization_logger.info(
+                        "Auto-discovered language: %s (%s keys)",
+                        lang_code,
+                        len(translations)
+                    )
+            except Exception as e:
+                _localization_logger.error("Error loading %s: %s", json_file, e)
+
+    def _validate_all_languages(self):
+        """Валидирует, что все языки содержат те же ключи, что и base_keys.json"""
+        if not self._base_keys:
+            _localization_logger.warning("No base keys loaded, skipping validation")
+            return
+
+        for lang_code, translations in self._translations.items():
+            lang_keys = set(translations.keys())
+            missing = self._base_keys - lang_keys
+            extra = lang_keys - self._base_keys
+
+            if missing:
+                _localization_logger.warning(
+                    "Language %s is missing %s keys: %s",
+                    lang_code,
+                    len(missing),
+                    list(missing)[:10]
+                )
+            if extra:
+                _localization_logger.warning(
+                    "Language %s has %s extra keys: %s",
+                    lang_code,
+                    len(extra),
+                    list(extra)[:10]
+                )
+
+            if not missing and not extra:
+                _localization_logger.info(
+                    "Language %s is fully synchronized with base_keys.json",
+                    lang_code
+                )
+
+    def get_current_language(self) -> str:
+        """Возвращает текущий язык"""
+        return self._current_language
+
+    def set_language(self, language_code: str, save_to_db: bool = True):
+        """Устанавливает язык приложения"""
+        if language_code not in self._translations:
+            _localization_logger.warning(
+                "Language %s not found, using default: %s",
+                language_code,
+                self.DEFAULT_LANGUAGE
+            )
+            language_code = self.DEFAULT_LANGUAGE
+
+        if self._current_language != language_code:
+            old_lang = self._current_language
+            self._current_language = language_code
+            _localization_logger.info("Language changed from %s to %s", old_lang, language_code)
+
+            if save_to_db:
+                self._save_language_to_db(language_code)
+
+            self._notify_callbacks()
+
+    def _save_language_to_db(self, language_code: str):
+        """Сохраняет язык в базу данных"""
+        try:
+            username = get_current_username()
+            if not username:
+                return
+
+            conn = sqlite3.connect(DB_FILE)
+            cursor = conn.cursor()
+
+            try:
+                cursor.execute('ALTER TABLE auth_users ADD COLUMN language TEXT DEFAULT "de"')
+                conn.commit()
+            except sqlite3.OperationalError:
+                pass
+
+            cursor.execute(
+                'UPDATE auth_users SET language = ? WHERE username = ?',
+                (language_code, username)
+            )
+            conn.commit()
+            conn.close()
+
+            _localization_logger.info(
+                "Language %s saved to database for user %s",
+                language_code,
+                username
+            )
+
+        except Exception as e:
+            _localization_logger.error("Error saving language to database: %s", e)
+
+    def load_language_from_db(self, username: Optional[str] = None) -> Optional[str]:
+        """Загружает язык пользователя из базы данных"""
+        try:
+            if username is None:
+                username = get_current_username()
+
+            if not username:
+                return None
+
+            conn = sqlite3.connect(DB_FILE)
+            cursor = conn.cursor()
+
+            try:
+                cursor.execute('SELECT language FROM auth_users WHERE username = ?', (username,))
+                result = cursor.fetchone()
+                conn.close()
+
+                if result and result[0]:
+                    lang = result[0]
+                    if lang in self._translations:
+                        _localization_logger.info(
+                            "Loaded language %s from database for user %s",
+                            lang,
+                            username
+                        )
+                        return lang
+            except sqlite3.OperationalError:
+                pass
+
+            conn.close()
+
+        except Exception as e:
+            _localization_logger.error("Error loading language from database: %s", e)
+
+        return None
+
+    def t(self, key: str, **kwargs) -> str:
+        """Получает перевод для ключа (главная функция)"""
+        translation = self._get_translation(key, self._current_language)
+
+        if translation is None or translation == "":
+            translation = self._get_translation(key, self.FALLBACK_LANGUAGE)
+            if translation is None or translation == "":
+                _localization_logger.warning(
+                    "Translation key '%s' not found in %s or %s",
+                    key,
+                    self._current_language,
+                    self.FALLBACK_LANGUAGE
+                )
+                return key
+
+        if kwargs:
+            try:
+                translation = translation.format(**kwargs)
+            except KeyError as e:
+                _localization_logger.warning("Missing format parameter %s in key '%s'", e, key)
+            except Exception as e:
+                _localization_logger.warning("Error formatting key '%s': %s", key, e)
+
+        return translation
+
+    def _get_translation(self, key: str, language_code: str) -> Optional[str]:
+        """Получает перевод для ключа и языка"""
+        translations = self._translations.get(language_code, {})
+        return translations.get(key)
+
+    def register_callback(self, callback: Callable[[], None]):
+        """Регистрирует callback для обновления UI при смене языка"""
+        if callback not in self._callbacks:
+            self._callbacks.append(callback)
+
+    def unregister_callback(self, callback: Callable[[], None]):
+        """Удаляет callback из списка"""
+        if callback in self._callbacks:
+            self._callbacks.remove(callback)
+
+    def _notify_callbacks(self):
+        """Уведомляет все зарегистрированные callbacks о смене языка"""
+        for callback in self._callbacks:
+            try:
+                callback()
+            except Exception as e:
+                _localization_logger.error("Error in language change callback: %s", e)
+
+    def get_available_languages(self) -> Dict[str, Dict]:
+        """Возвращает словарь доступных языков с метаданными"""
+        result = {}
+        for lang_code, meta in self._available_languages.items():
+            if lang_code in self._translations:
+                result[lang_code] = meta
+        return result
+
+    def get_language_display_name(self, lang_code: str) -> str:
+        """Возвращает отображаемое имя языка с флагом"""
+        if lang_code in self._available_languages:
+            meta = self._available_languages[lang_code]
+            flag = meta.get('flag', '')
+            native_name = meta.get('native_name', lang_code)
+            return f"{flag} {native_name}"
+        return lang_code
+
+    def validate_language_file(self, lang_code: str) -> Dict[str, any]:
+        """Валидирует файл языка на соответствие base_keys.json"""
+        if lang_code not in self._translations:
+            return {"valid": False, "error": f"Language {lang_code} not found"}
+
+        lang_keys = set(self._translations[lang_code].keys())
+        missing = self._base_keys - lang_keys
+        extra = lang_keys - self._base_keys
+
+        return {
+            "valid": len(missing) == 0 and len(extra) == 0,
+            "missing_keys": list(missing),
+            "extra_keys": list(extra),
+            "total_keys": len(lang_keys),
+            "base_keys_count": len(self._base_keys)
+        }
+
+
+_localization_manager: Optional[LocalizationManager] = None
+
+
+def get_localization_manager() -> LocalizationManager:
+    """Возвращает глобальный экземпляр менеджера локализации"""
+    global _localization_manager
+    if _localization_manager is None:
+        _localization_manager = LocalizationManager()
+    return _localization_manager
+
+
+def t(key: str, **kwargs) -> str:
+    """Глобальная функция для получения перевода (главная функция)"""
+    return get_localization_manager().t(key, **kwargs)
+
+
+def get_current_language() -> str:
+    """Возвращает текущий язык"""
+    return get_localization_manager().get_current_language()
+
+
+def set_language(language_code: str, save_to_db: bool = True):
+    """Устанавливает язык приложения"""
+    get_localization_manager().set_language(language_code, save_to_db)
+
+
+def register_language_callback(callback: Callable[[], None]):
+    """Регистрирует callback для обновления UI при смене языка"""
+    get_localization_manager().register_callback(callback)
+
+
+def tr(key: str, **kwargs) -> str:
+    """Алиас для t() для обратной совместимости"""
+    return t(key, **kwargs)
+
 
 # Для обратной совместимости - будет обновляться при инициализации
 CURRENT_LANGUAGE = 'de'
 
-# Старый TRANSLATIONS удален - теперь используется система из localization_manager
-# Все переводы находятся в JSON файлах в папке locales/
 
-# Инициализация локализации при импорте модуля
 def init_localization():
     """Инициализирует систему локализации"""
     global CURRENT_LANGUAGE
-    
+
     manager = get_localization_manager()
-    
-    # НЕ загружаем язык пользователя здесь - это будет сделано при логине
-    # Используем язык по умолчанию (de)
     CURRENT_LANGUAGE = manager.get_current_language()
-    
     return manager
 
-# Инициализируем локализацию (только при первом запуске)
+
 try:
     _ = init_localization()
 except Exception as e:
     print(f"Ошибка инициализации локализации: {e}")
-    # Продолжаем работу с языком по умолчанию
     pass
 
-# Текущий язык обновляется через LocalizationManager
-# CURRENT_LANGUAGE будет обновляться при инициализации
 
 def save_language_to_db(language):
     """Сохраняет язык в базу данных"""
-    # Используем новую систему локализации
     set_language(language, save_to_db=True)
 
 # Класс для кликабельного QLabel
@@ -196,35 +538,47 @@ class ClickableLabel(QLabel):
             """)
         super().leaveEvent(event)
 
-# Гармоничная теплая тема в стиле glassmorphism
-NEON_THEME = {
-    "bg_start": "#0a0a0f",  # Глубокий черный
-    "bg_end": "#0f0f1a",  # Темно-синий
-    "sidebar": "#121220",  # Боковая панель
-    "panel": "#1a1a2a",  # Панели
-    "card": "rgba(255, 255, 255, 0.25)",  # Менее прозрачная карточка
-    "card_alt": "rgba(255, 255, 255, 0.3)",  # Альтернативные карточки
-    "accent": "#a78bfa",  # Гармоничный фиолетовый
-    "accent_alt": "#c084fc",  # Более насыщенный фиолетовый
-    "accent_cyan": "#818cf8",  # Индиго
-    "accent_blue": "#6366f1",  # Индиго-синий
-    "accent_teal": "#3DB8A8",  # Темный бирюзовый (затемнен)
-    "accent_teal_light": "#5EEAD4",  # Средний бирюзовый
-    "accent_teal_dark": "#2A9D8F",  # Очень темный бирюзовый
-    "success": "#34d399",  # Зеленый
-    "text": "#ffffff",
-    "text_secondary": "#f3e8ff",  # Очень светло-лавандовый
-    "muted": "#d8b4fe",  # Светло-фиолетовый
-    "stat_card": "rgba(255, 255, 255, 0.2)",
-    "stat_border": "rgba(167, 139, 250, 0.5)",
-    "stat_value": "#a78bfa",
-    "gradient_pink": "#ec4899",  # Розовый
-    "gradient_blue": "#8b5cf6",  # Фиолетовый
-    "gradient_start": "#8b5cf6",  # Начало градиента (фиолетовый)
-    "gradient_end": "#ec4899",  # Конец градиента (розовый)
-    "button_gradient_start": "#6366f1",  # Индиго для кнопки
-    "button_gradient_end": "#8b5cf6"  # Фиолетовый для кнопки
+# Основная цветовая палитра приложения (без переключения тем)
+APP_COLORS = {
+    "main_window_bg_start": "#F5F0FF",
+    "main_window_bg_mid": "#F5F0FF",
+    "main_window_bg_end": "#F5F0FF",
+    "sidebar_bg": "#E8D5FF",
+    "content_bg": "#F5F0FF",
+    "input_bg": "#F5F0FF",
+    "card_bg": "#FFFFFF",
+    "text_primary": "#3D2B5D",
+    "text_secondary": "#5E548A",
+    "text_tertiary": "#7D6B8F",
+    "input_text": "#3D2B5D",
+    "button_primary_text": "#FFFFFF",
+    "button_secondary_text": "#5E548A",
+    "error_text": "#DC3545",
+    "card_border": "#D8C5F0",
+    "input_border": "#C0A8E8",
+    "input_border_focus": "#A78BFA",
+    "border_color": "#D8C5F0",
+    "border_light": "#E0CDF7",
+    "separator_color": "#D8C5F0",
+    "button_primary_bg": "#A78BFA",
+    "button_primary_hover": "#B99DFF",
+    "button_secondary_bg": "#E0CDF7",
+    "button_secondary_hover": "#D8C5F0",
+    "accent": "#A78BFA",
+    "accent_alt": "#B99DFF",
+    "accent_color": "#A78BFA",
+    "accent_hover": "#B99DFF",
+    "error_bg": "rgba(220, 53, 69, 0.1)",
+    "success_color": "#28A745",
+    "warning_color": "#FFC107",
+    "info_color": "#17A2B8",
+    "accent_teal": "#3DB8A8",
 }
+
+
+def get_app_colors() -> Dict[str, str]:
+    """Возвращает копию базовой цветовой палитры."""
+    return dict(APP_COLORS)
 
 # Инициализация базы данных
 DB_FILE = "email_app.db"
@@ -1989,8 +2343,11 @@ def get_user_registration_date(username=None):
         # Fallback для обратной совместимости
         conn = sqlite3.connect(DB_FILE)
         cursor = conn.cursor()
-        cursor.execute('SELECT created_at FROM user ORDER BY id DESC LIMIT 1')
-        result = cursor.fetchone()
+        try:
+            cursor.execute('SELECT created_at FROM user ORDER BY id DESC LIMIT 1')
+            result = cursor.fetchone()
+        except sqlite3.OperationalError:
+            result = None
         conn.close()
         if result and result[0]:
             return result[0]
@@ -1999,8 +2356,11 @@ def get_user_registration_date(username=None):
     # Получаем дату регистрации из auth_users по username
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
-    cursor.execute('SELECT created_at FROM auth_users WHERE username = ?', (username,))
-    result = cursor.fetchone()
+    try:
+        cursor.execute('SELECT created_at FROM auth_users WHERE username = ?', (username,))
+        result = cursor.fetchone()
+    except sqlite3.OperationalError:
+        result = None
     conn.close()
     if result and result[0]:
         return result[0]
@@ -3102,7 +3462,6 @@ class LoginScreen(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.colors = NEON_THEME
         self.setWindowTitle(tr("login_title"))
         # Убираем фиксированный размер для растягивания по ширине
         self.setMinimumSize(1200, 720)
@@ -3617,13 +3976,9 @@ class LoginScreen(QMainWindow):
 
     def apply_theme(self):
         """
-        Apply theme through centralized ThemeManager.
-        LoginScreen should use theme colors, not hardcoded values.
+        Apply base palette styles for LoginScreen.
         """
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        theme = theme_manager.get_current_theme()
-        colors = theme["colors"]
+        colors = get_app_colors()
         
         # Use theme colors instead of hardcoded values
         self.setStyleSheet(
@@ -3974,9 +4329,6 @@ class LoginScreen(QMainWindow):
         self.main_window.show()
         self.close()
 
-
-# Импортируем менеджер тем
-from theme_manager import get_theme_manager
 
 # Импорт SettingsDialog перенесен внутрь функции show_settings для избежания циклического импорта
 
@@ -5574,16 +5926,6 @@ class EmailApp(QMainWindow):
         self.setWindowTitle("Bewerbungs Studio")
         self.setFixedSize(1700, 950)  # Увеличена ширина и высота для лучшего первого впечатления
         
-        # Инициализируем менеджер тем
-        # ThemeManager уже загружает сохраненную тему в __init__
-        try:
-            self.theme_manager = get_theme_manager()
-            # Тема уже применена глобально в main(), но убедимся что она применена
-            # Не применяем здесь, чтобы избежать конфликтов - тема уже применена в main()
-        except Exception as e:
-            print(f"Ошибка инициализации темы: {e}")
-            self.theme_manager = None
-        
         # Загружаем язык пользователя при входе
         global CURRENT_LANGUAGE, _username_cache, _username_cache_time
         
@@ -5805,11 +6147,8 @@ class EmailApp(QMainWindow):
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
         
-        # Устанавливаем градиентный фон через менеджер тем (как в profile_page.py)
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        theme = theme_manager.get_current_theme()
-        colors = theme["colors"]
+        # Устанавливаем градиентный фон через базовую палитру
+        colors = get_app_colors()
         
         main_widget.setStyleSheet(f"""
             QWidget {{
@@ -6603,30 +6942,22 @@ class EmailApp(QMainWindow):
                     self.nav_buttons_blur_effects[i].setBlurRadius(blur_radius)
     
     def apply_theme(self):
-        """
-        Apply theme through centralized ThemeManager.
-        This method should NOT define any inline styles - all styling comes from ThemeManager.
-        """
-        if not hasattr(self, 'theme_manager') or self.theme_manager is None:
-            self.theme_manager = get_theme_manager()
-        
-        # Apply theme atomically through ThemeManager
-        # This clears old styles and applies new ones globally
-        self.theme_manager.apply_theme_to_app()
-        
-        # Update button styles if needed
+        """Применяет базовую палитру и обновляет виджеты."""
+        colors = get_app_colors()
+        central = self.centralWidget()
+        if central:
+            central.setStyleSheet(f"""
+                QWidget {{
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                        stop:0 {colors['main_window_bg_start']},
+                        stop:0.4 {colors['main_window_bg_mid']},
+                        stop:1 {colors['main_window_bg_end']});
+                }}
+            """)
+
         if hasattr(self, 'stacked_widget') and self.stacked_widget:
             self.update_button_styles(self.stacked_widget.currentIndex())
-        if hasattr(self, 'central_widget'):
-            central = self.centralWidget()
-            if central:
-                central.update()
-        
-        # Обновляем стили кнопок
-        if hasattr(self, 'stacked_widget') and self.stacked_widget:
-            self.update_button_styles(self.stacked_widget.currentIndex())
-        
-        # Обновляем все страницы
+
         if hasattr(self, 'stacked_widget'):
             for i in range(self.stacked_widget.count()):
                 widget = self.stacked_widget.widget(i)
@@ -6635,12 +6966,12 @@ class EmailApp(QMainWindow):
     
     
     def load_background(self):
-        """Метод больше не используется - фон теперь устанавливается через градиент из theme_manager"""
+        """Метод больше не используется - фон теперь устанавливается через градиент"""
         # Фон теперь устанавливается через градиент в setup_ui
         pass
     
     def update_background_size(self):
-        """Метод больше не используется - фон теперь устанавливается через градиент из theme_manager"""
+        """Метод больше не используется - фон теперь устанавливается через градиент"""
         # Фон теперь устанавливается через градиент, этот метод больше не нужен
         pass
                     
@@ -6751,17 +7082,6 @@ def main():
     
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
-    
-    # Apply theme immediately at app startup through centralized ThemeManager
-    # This ensures all widgets get styled correctly from the start
-    try:
-        from theme_manager import get_theme_manager
-        theme_manager = get_theme_manager()
-        # ThemeManager already loads preference in __init__, just apply it
-        theme_manager.apply_theme_to_app()
-    except Exception as e:
-        print(f"Ошибка загрузки темы при запуске: {e}")
-        # Continue without theme
     
     # Регистрируем очистку ресурсов при выходе
     atexit.register(cleanup_resources)
