@@ -1,0 +1,19 @@
+# Библиотеки для Email App
+PyQt6>=6.5.0
+groq>=0.4.0
+Pillow>=10.0.0
+google-auth>=2.23.0
+google-auth-oauthlib>=1.1.0
+google-auth-httplib2>=0.1.1
+google-api-python-client>=2.100.0
+reportlab>=4.0.0
+
+# Альтернатива для PDF (если reportlab не подходит):
+# fpdf2>=2.7.0
+
+# Встроенные библиотеки, используемые в приложении:
+# - smtplib (отправка email)
+# - email (создание email сообщений)
+# - datetime (дата и время)
+
+

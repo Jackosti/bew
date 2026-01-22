@@ -1,0 +1,365 @@
+2026-01-22 14:39:03,998 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:39:04,012 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:39:04,041 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:39:04,052 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:39:04,071 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:39:04,072 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:39:04,072 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:39:04,072 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:39:04,073 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:39:04,073 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:39:54,289 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:39:54,290 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:39:54,291 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:39:54,292 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:39:54,292 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:39:54,292 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:39:54,292 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:39:54,292 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:39:54,292 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:39:54,292 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:45:46,134 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:45:46,136 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:45:46,136 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:45:46,138 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:45:46,138 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:45:46,139 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:45:46,139 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:45:46,139 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:45:46,139 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:45:46,139 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:48:00,328 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:48:00,328 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:48:00,329 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:48:00,329 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:48:00,329 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:48:00,331 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:48:00,331 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:48:00,331 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:48:00,331 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:48:00,331 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:48:34,651 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:48:34,652 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:48:34,652 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:48:34,653 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:48:34,653 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:48:34,653 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:48:34,653 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:48:34,653 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:48:34,653 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:48:34,653 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:48:48,429 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:48:48,430 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:48:48,430 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:48:48,431 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:48:48,432 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:48:48,432 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:48:48,432 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:48:48,432 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:48:48,432 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:48:48,432 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:49:37,715 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:49:37,715 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:49:37,717 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:49:37,717 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:49:37,717 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:49:37,717 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:49:37,719 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:49:37,719 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:49:37,719 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:49:37,719 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:53:27,630 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:53:27,662 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:53:27,690 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:53:27,701 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:53:27,721 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:53:27,721 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:53:27,721 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:53:27,721 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:53:27,721 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:53:27,721 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:53:40,120 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:53:40,121 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:53:40,122 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:53:40,122 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:53:40,123 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:53:40,123 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:53:40,124 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:53:40,124 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:53:40,124 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:53:40,124 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:53:43,964 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 14:57:19,973 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:57:19,974 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:57:19,976 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:57:19,977 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:57:19,977 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:57:19,977 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:57:19,977 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:57:19,978 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:57:19,978 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:57:19,978 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:57:40,897 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:57:40,897 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:57:40,899 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:57:40,899 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:57:40,901 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:57:40,901 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:57:40,901 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:57:40,901 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:57:40,901 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:57:40,901 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:57:41,010 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 14:57:50,700 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 14:57:50,700 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 14:57:50,702 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 14:57:50,702 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 14:57:50,702 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 14:57:50,704 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 14:57:50,704 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 14:57:50,704 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 14:57:50,704 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 14:57:50,704 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 14:57:50,768 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 14:57:52,810 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 14:57:52,810 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 14:57:54,708 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:01:18,614 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:01:18,615 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:01:18,615 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:01:18,615 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:01:18,617 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:01:18,617 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:01:18,618 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:01:18,618 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:01:18,618 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:01:18,618 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:01:18,646 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in de or de
+2026-01-22 15:01:36,182 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:01:36,182 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:01:36,183 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:01:36,183 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:01:36,185 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:01:36,185 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:01:36,185 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:01:36,185 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:01:36,185 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:01:36,186 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:01:36,389 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:01:37,634 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:01:37,634 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:01:39,247 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:01:39,651 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:02:19,979 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:02:19,981 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:02:19,983 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:02:19,983 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:02:19,985 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:02:19,985 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:02:19,985 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:02:19,985 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:02:19,985 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:02:19,985 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:02:20,003 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:02:20,200 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in de or de
+2026-01-22 15:02:20,510 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in de or de
+2026-01-22 15:02:42,075 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:02:42,075 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:02:42,077 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:02:42,077 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:02:42,077 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:02:42,077 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:02:42,078 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:02:42,078 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:02:42,078 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:02:42,078 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:02:42,331 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:02:43,433 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:02:43,433 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:02:45,055 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:02:45,326 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:02:47,862 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:02:58,211 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:02:59,357 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:03:08,351 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:04:19,973 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:04:26,471 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:04:26,644 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:13:52,715 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:13:52,715 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:13:52,716 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:13:52,716 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:13:52,716 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:13:52,717 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:13:52,717 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:13:52,717 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:13:52,717 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:13:52,717 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:13:52,729 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:13:53,026 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in de or de
+2026-01-22 15:13:53,344 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in de or de
+2026-01-22 15:14:04,380 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:14:04,381 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:14:04,382 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:14:04,383 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:14:04,383 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:14:04,383 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:14:04,383 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:14:04,383 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:14:04,383 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:14:04,383 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:14:04,585 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:14:05,786 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:14:05,786 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:14:07,411 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:14:07,701 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:14:10,725 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:14:12,045 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:14:15,366 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:14:16,822 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:19:11,603 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:19:11,683 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:20:02,513 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:20:03,403 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:20:11,732 - LocalizationManager - WARNING - Translation key 'email_body_preview_unavailable' not found in ru or de
+2026-01-22 15:20:30,311 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:20:30,313 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:20:30,313 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:20:30,314 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:20:30,315 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:20:30,315 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:20:30,315 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:20:30,315 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:20:30,315 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:20:30,315 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:20:30,522 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:20:31,778 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:20:31,779 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:20:33,390 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:20:33,623 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:20:36,482 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:20:36,739 - LocalizationManager - WARNING - Translation key 'last_activity_days_ago' not found in ru or de
+2026-01-22 15:20:57,113 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:20:57,114 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:20:57,114 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:20:57,114 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:20:57,116 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:20:57,116 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:20:57,116 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:20:57,116 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:20:57,116 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:20:57,116 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:20:57,290 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:20:58,561 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:20:58,561 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:21:00,181 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:21:00,294 - LocalizationManager - WARNING - Translation key 'insights' not found in ru or de
+2026-01-22 15:28:31,267 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:28:31,267 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:28:31,268 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:28:31,269 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:28:31,269 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:28:31,269 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:28:31,270 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:28:31,270 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:28:31,270 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:28:31,270 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:28:31,282 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:28:31,563 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in de or de
+2026-01-22 15:28:31,666 - LocalizationManager - WARNING - Translation key 'insights' not found in de or de
+2026-01-22 15:28:45,339 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:28:45,339 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:28:45,341 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:28:45,341 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:28:45,342 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:28:45,342 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:28:45,342 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:28:45,342 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:28:45,342 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:28:45,342 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:28:45,560 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:28:49,429 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:28:49,431 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:28:51,042 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:28:51,137 - LocalizationManager - WARNING - Translation key 'insights' not found in ru or de
+2026-01-22 15:29:32,528 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:29:32,528 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:29:32,529 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:29:32,529 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:29:32,531 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:29:32,531 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:29:32,531 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:29:32,531 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:29:32,531 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:29:32,531 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:29:32,608 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:29:33,790 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:29:33,790 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:29:35,401 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:29:35,514 - LocalizationManager - WARNING - Translation key 'insights' not found in ru or de
+2026-01-22 15:30:37,563 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:30:37,563 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:30:37,564 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:30:37,564 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:30:37,565 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:30:37,565 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:30:37,566 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:30:37,566 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:30:37,566 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:30:37,566 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:30:37,659 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:30:39,164 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:30:39,164 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:30:40,763 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:30:40,858 - LocalizationManager - WARNING - Translation key 'insights' not found in ru or de
+2026-01-22 15:36:39,303 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:36:39,332 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:36:39,362 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:36:39,372 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:36:39,399 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:36:39,399 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:36:39,399 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:36:39,399 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:36:39,399 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:36:39,399 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:36:39,568 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:52:09,282 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:52:09,283 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:52:09,284 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:52:09,284 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:52:09,285 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:52:09,285 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:52:09,285 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:52:09,286 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:52:09,286 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:52:09,286 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:54:33,247 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:54:33,248 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:54:33,248 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:54:33,248 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:54:33,250 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:54:33,250 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:54:33,250 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:54:33,250 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:54:33,250 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:54:33,250 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:54:37,011 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:54:39,477 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:54:39,477 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:54:41,221 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:54:41,328 - LocalizationManager - WARNING - Translation key 'insights' not found in ru or de
+2026-01-22 15:55:44,367 - LocalizationManager - INFO - Loaded meta.json: 3 languages
+2026-01-22 15:55:44,369 - LocalizationManager - INFO - Loaded base_keys.json: 433 keys
+2026-01-22 15:55:44,369 - LocalizationManager - INFO - Auto-discovered language: de (433 keys)
+2026-01-22 15:55:44,369 - LocalizationManager - INFO - Auto-discovered language: en (433 keys)
+2026-01-22 15:55:44,370 - LocalizationManager - INFO - Auto-discovered language: ru (433 keys)
+2026-01-22 15:55:44,370 - LocalizationManager - INFO - Language de is fully synchronized with base_keys.json
+2026-01-22 15:55:44,371 - LocalizationManager - INFO - Language en is fully synchronized with base_keys.json
+2026-01-22 15:55:44,371 - LocalizationManager - INFO - Language ru is fully synchronized with base_keys.json
+2026-01-22 15:55:44,371 - LocalizationManager - INFO - LocalizationManager initialized. Current language: de
+2026-01-22 15:55:44,371 - LocalizationManager - INFO - Available languages: ['de', 'en', 'ru']
+2026-01-22 15:55:44,449 - ThemeManager - WARNING - Не удалось загрузить тему из БД: no such table: app_preferences
+2026-01-22 15:55:45,900 - LocalizationManager - INFO - Loaded language ru from database for user kostriol
+2026-01-22 15:55:45,902 - LocalizationManager - INFO - Language changed from de to ru
+2026-01-22 15:55:47,507 - LocalizationManager - WARNING - Translation key 'search_by_email_position_date' not found in ru or de
+2026-01-22 15:55:47,630 - LocalizationManager - WARNING - Translation key 'insights' not found in ru or de
